@@ -93,21 +93,24 @@ const Hero = () => {
         transform: `translateY(${scrollProgress * -50}px) scale(${1 - scrollProgress * 0.1})`
       }}
     >
-      {/* 3D Skills Cube */}
-      <div className={`absolute pointer-events-none z-0 ${
+      {/* 3D Skills Cube - Behind content on mobile */}
+      <div className={`absolute pointer-events-none ${
         isMobile 
-          ? 'top-16 right-0 w-full h-[350px] opacity-30' 
-          : 'bottom-60 right-0 md:right-10 w-full md:w-[700px] h-[700px] md:h-[600px] opacity-80'
+          ? 'inset-0 z-0 flex items-center justify-center opacity-20' 
+          : 'bottom-60 right-0 md:right-10 w-full md:w-[700px] h-[700px] md:h-[600px] opacity-80 z-0'
       }`}>
         <SkillsCube isMobile={isMobile} />
       </div>
 
-      <div className={`${styles.heroContent} ${isMobile ? 'px-6 relative z-10' : ''}`}>
+      {/* Content - On top for mobile, centered */}
+      <div className={`${styles.heroContent} relative z-10 ${
+        isMobile ? 'flex flex-col items-center text-center px-4 pt-20' : ''
+      }`}>
         <p className={`${styles.welcomeText} text-xs sm:text-sm mb-3 sm:mb-4 font-mono ${styles.fadeIn}`}>
           <span className="text-gray-700">{'// '}</span>Welcome to my digital space
         </p>
 
-        {/* Fixed: "Hi, I'm Thameem" - Now Visible */}
+        {/* "Hi, I'm Thameem" */}
         <h1 className={`font-bold mb-4 sm:mb-6 ${styles.fadeIn} ${
           isMobile ? 'text-4xl' : 'text-6xl md:text-8xl'
         }`}>
@@ -137,12 +140,14 @@ const Hero = () => {
 
         {/* Roles */}
         <div className={`relative overflow-hidden mb-4 sm:mb-6 ${
-          isMobile ? 'h-10' : 'h-10 md:h-10'
+          isMobile ? 'h-10 w-full flex justify-center' : 'h-10 md:h-10'
         }`}>
           {roles.map((role, index) => (
             <div
               key={index}
-              className={`absolute inset-0 flex items-center transition-all duration-500 ${
+              className={`absolute inset-0 flex items-center ${
+                isMobile ? 'justify-center' : ''
+              } transition-all duration-500 ${
                 currentRole === index
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
@@ -155,21 +160,21 @@ const Hero = () => {
           ))}
         </div>
 
-        {/* Description */}
-        <p className={`${styles.descriptionText} leading-relaxed mb-6 sm:mb-10 max-w-2xl ${
-          isMobile ? 'text-sm' : 'text-xl'
+        {/* Description - Fully visible on mobile */}
+        <p className={`${styles.descriptionText} leading-relaxed mb-6 sm:mb-10 ${
+          isMobile ? 'text-xs max-w-sm px-2' : 'text-xl max-w-2xl'
         }`}>
           Architecting and delivering robust, end-to-end <span className={styles.accentBlue}>AI, ML</span> systems to create efficient, scalable, high-performance solutions to tackle complex challenges via <span className={styles.accentPurple}>Data Science</span>.
         </p>
 
-        {/* Buttons - Fixed Width for Mobile */}
+        {/* Buttons - Smaller width on mobile */}
         <div className={`flex gap-3 mb-8 sm:mb-12 ${
-          isMobile ? 'flex-col' : 'flex-wrap'
+          isMobile ? 'flex-col items-center w-full max-w-xs' : 'flex-wrap'
         }`}>
           <a
             href="#projects"
             className={`${styles.btnPrimary} flex items-center justify-center gap-2 group ${
-              isMobile ? 'py-3 px-5 text-sm' : 'px-6 py-3'
+              isMobile ? 'py-2.5 px-6 text-sm' : 'px-6 py-3'
             }`}
           >
             <span>View Projects</span>
@@ -179,8 +184,8 @@ const Hero = () => {
           </a>
           <a
             href="#contact"
-            className={`${styles.btnSecondary} ${
-              isMobile ? 'py-3 px-5 text-sm text-center' : 'px-6 py-3'
+            className={`${styles.btnSecondary} text-center ${
+              isMobile ? 'py-2.5 px-6 text-sm' : 'px-6 py-3'
             }`}
           >
             Let&apos;s Talk
@@ -188,7 +193,7 @@ const Hero = () => {
           <a
             href="#about"
             className={`${styles.btnTertiary} flex items-center justify-center gap-2 ${
-              isMobile ? 'py-3 px-5 text-sm' : 'px-6 py-3'
+              isMobile ? 'py-2.5 px-6 text-sm' : 'px-6 py-3'
             }`}
           >
             <span>Learn more</span>
@@ -199,7 +204,9 @@ const Hero = () => {
         </div>
 
         {/* Tech Tags */}
-        <div className="border-t border-b border-gray-800 py-4 sm:py-6 overflow-hidden">
+        <div className={`border-t border-b border-gray-800 py-4 sm:py-6 overflow-hidden ${
+          isMobile ? 'w-full' : ''
+        }`}>
           <div className={`flex items-center gap-4 sm:gap-8 ${styles.techTagMarquee}`}>
             {['Python', 'React', 'FastAPI', 'TensorFlow', 'PostgreSQL', 'Docker', 'TypeScript', 'OpenAI'].map((tech, index) => (
               <span key={index} className={`${styles.techTag} ${isMobile ? 'text-xs' : 'text-sm'}`}>
