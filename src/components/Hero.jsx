@@ -102,20 +102,20 @@ const Hero = () => {
         <SkillsCube isMobile={isMobile} />
       </div>
 
-      {/* Content - Moved higher on mobile */}
+      {/* Content - Moved MUCH closer to navbar */}
       <div className={`${styles.heroContent} relative z-10 ${
-        isMobile ? 'flex flex-col items-center text-center px-4 pt-16' : ''
+        isMobile ? 'flex flex-col items-center text-center px-4 pt-20' : ''
       }`}>
-        {/* Welcome text - Bigger and moved to top (mb-0) */}
+        {/* Welcome text - Bigger */}
         <p className={`${styles.welcomeText} font-mono ${styles.fadeIn} ${
-          isMobile ? 'text-sm mb-0' : 'text-sm mb-4'
+          isMobile ? 'text-base mb-0' : 'text-sm mb-4'
         }`}>
           <span className="text-gray-700">{'// '}</span>Welcome to my digital space
         </p>
 
-        {/* "Hi, I'm Thameem" - Even bigger and closer to welcome text */}
+        {/* "Hi, I'm Thameem" - MUCH bigger */}
         <h1 className={`font-bold ${styles.fadeIn} ${
-          isMobile ? 'text-6xl mb-2' : 'text-6xl md:text-8xl mb-6'
+          isMobile ? 'text-7xl mb-2' : 'text-6xl md:text-8xl mb-6'
         }`}>
           <span className={styles.greetingText}>
             H
@@ -125,12 +125,12 @@ const Hero = () => {
             </span>
             , I&apos;m 
           </span>
-          <span className="block mt-2" style={{ minHeight: isMobile ? '75px' : '100px' }}>
+          <span className="block mt-2" style={{ minHeight: isMobile ? '85px' : '100px' }}>
             <span 
               className={styles.nameGradient}
               style={{ 
                 display: 'inline-block', 
-                minWidth: isMobile ? '260px' : '300px'
+                minWidth: isMobile ? '280px' : '300px'
               }}
             >
               {displayedText || 'Thameem'}
@@ -141,7 +141,7 @@ const Hero = () => {
           </span>
         </h1>
 
-        {/* Roles - Moved higher */}
+        {/* Roles */}
         <div className={`relative overflow-hidden ${
           isMobile ? 'h-10 w-full flex justify-center mb-3' : 'h-10 md:h-10 mb-6'
         }`}>
@@ -170,7 +170,7 @@ const Hero = () => {
           Architecting and delivering robust, end-to-end <span className={styles.accentBlue}>AI, ML</span> systems to create efficient, scalable, high-performance solutions to tackle complex challenges via <span className={styles.accentPurple}>Data Science</span>.
         </p>
 
-        {/* Buttons - Increased width */}
+        {/* Buttons */}
         <div className={`flex gap-3 ${
           isMobile ? 'flex-col items-center w-full max-w-sm mb-6' : 'flex-wrap mb-12'
         }`}>
