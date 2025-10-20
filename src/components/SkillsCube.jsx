@@ -8,7 +8,7 @@ import {
 } from 'react-icons/si'
 import { FaRobot } from 'react-icons/fa'
 
-function AdvancedDiamond({ scrollProgress, mousePos }) {
+function AdvancedDiamond({ scrollProgress, mousePos, isMobile }) {
   const diamondRef = useRef()
   const innerRef = useRef()
   const skillsGroupRef = useRef()
@@ -29,8 +29,10 @@ function AdvancedDiamond({ scrollProgress, mousePos }) {
     const time = clock.getElapsedTime()
 
     if (diamondRef.current) {
-      const targetRotX = mousePos.y * 0.3
-      const targetRotY = time * 0.2 + mousePos.x * 0.3
+      // Slower, smoother rotation on mobile
+      const rotationSpeed = isMobile ? 0.1 : 0.2
+      const targetRotX = mousePos.y * (isMobile ? 0.1 : 0.3)
+      const targetRotY = time * rotationSpeed + mousePos.x * (isMobile ? 0.1 : 0.3)
       
       diamondRef.current.rotation.x += (targetRotX - diamondRef.current.rotation.x) * 0.05
       diamondRef.current.rotation.y += (targetRotY - diamondRef.current.rotation.y) * 0.05
@@ -40,14 +42,17 @@ function AdvancedDiamond({ scrollProgress, mousePos }) {
     }
 
     if (innerRef.current) {
-      innerRef.current.rotation.x = -time * 0.3
-      innerRef.current.rotation.y = -time * 0.25
+      const innerSpeed = isMobile ? 0.2 : 0.3
+      innerRef.current.rotation.x = -time * innerSpeed
+      innerRef.current.rotation.y = -time * (innerSpeed - 0.05)
     }
 
     if (skillsGroupRef.current) {
-      skillsGroupRef.current.rotation.y = time * 0.1
+      const groupSpeed = isMobile ? 0.05 : 0.1
+      skillsGroupRef.current.rotation.y = time * groupSpeed
     }
 
+    // Depth-based scaling
     skillRefs.current.forEach((skillRef) => {
       if (skillRef) {
         const worldPos = skillRef.getWorldPosition(skillRef.position.clone())
@@ -60,8 +65,8 @@ function AdvancedDiamond({ scrollProgress, mousePos }) {
   })
 
   const getSkillRadius = () => {
-    const baseRadius = 2.4
-    const minRadius = 0.5
+    const baseRadius = isMobile ? 1.8 : 2.4
+    const minRadius = isMobile ? 0.4 : 0.5
     const smoothProgress = Math.max(0, Math.min(1, scrollProgress))
     return baseRadius - (baseRadius - minRadius) * smoothProgress * 0.8
   }
@@ -69,15 +74,15 @@ function AdvancedDiamond({ scrollProgress, mousePos }) {
   return (
     <>
       <Sparkles
-        count={30}
-        scale={5}
-        size={2}
+        count={isMobile ? 15 : 30}
+        scale={isMobile ? 3 : 5}
+        size={isMobile ? 1 : 2}
         speed={0.3}
         color={fixedColor}
         opacity={0.3}
       />
 
-      <group ref={diamondRef}>
+      <group ref={diamondRef} scale={isMobile ? 0.7 : 1}>
         <mesh>
           <octahedronGeometry args={[1.5, 1]} />
           <meshBasicMaterial
@@ -127,9 +132,9 @@ function AdvancedDiamond({ scrollProgress, mousePos }) {
           return (
             <Float 
               key={i} 
-              speed={1.5} 
-              rotationIntensity={0.1} 
-              floatIntensity={0.2}
+              speed={isMobile ? 1 : 1.5} 
+              rotationIntensity={isMobile ? 0.05 : 0.1} 
+              floatIntensity={isMobile ? 0.1 : 0.2}
             >
               <group
                 ref={(el) => (skillRefs.current[i] = el)}
@@ -139,11 +144,10 @@ function AdvancedDiamond({ scrollProgress, mousePos }) {
                   Math.sin(angle) * radius
                 ]}
               >
-                {/* Pure Icon - No Box */}
                 <Html
                   position={[0, 0, 0]}
                   center
-                  distanceFactor={10}
+                  distanceFactor={isMobile ? 8 : 10}
                   style={{
                     pointerEvents: 'none',
                     userSelect: 'none',
@@ -155,23 +159,21 @@ function AdvancedDiamond({ scrollProgress, mousePos }) {
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
-                      gap: '8px'
+                      gap: isMobile ? '4px' : '8px'
                     }}
                   >
-                    {/* Icon Only */}
                     <IconComponent 
                       style={{ 
-                        fontSize: '16px',
+                        fontSize: isMobile ? '12px' : '16px',
                         color: skill.color,
-                        filter: `drop-shadow(0 0 10px ${skill.color}80)`
+                        filter: `drop-shadow(0 0 ${isMobile ? '6px' : '10px'} ${skill.color}80)`
                       }} 
                     />
                     
-                    {/* Label */}
                     <div
                       style={{
                         color: skill.color,
-                        fontSize: '9px',
+                        fontSize: isMobile ? '7px' : '9px',
                         fontWeight: '500',
                         fontFamily: '"Courier New", monospace',
                         letterSpacing: '0.8px',
@@ -191,7 +193,7 @@ function AdvancedDiamond({ scrollProgress, mousePos }) {
   )
 }
 
-const SkillsDiamond = () => {
+const SkillsDiamond = ({ isMobile = false }) => {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
@@ -209,33 +211,48 @@ const SkillsDiamond = () => {
   }, [])
 
   useEffect(() => {
-    let ticking = false
-
-    const handleMouseMove = (e) => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const x = (e.clientX / window.innerWidth) * 2 - 1
-          const y = -(e.clientY / window.innerHeight) * 2 + 1
-          setMousePos({ x, y })
-          ticking = false
-        })
-        ticking = true
+    // On mobile, use touch/tilt instead of mouse
+    if (isMobile) {
+      const handleTouch = (e) => {
+        if (e.touches.length > 0) {
+          const touch = e.touches[0]
+          const x = (touch.clientX / window.innerWidth) * 2 - 1
+          const y = -(touch.clientY / window.innerHeight) * 2 + 1
+          setMousePos({ x: x * 0.5, y: y * 0.5 }) // Reduced sensitivity
+        }
       }
-    }
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true })
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+      window.addEventListener('touchmove', handleTouch, { passive: true })
+      return () => window.removeEventListener('touchmove', handleTouch)
+    } else {
+      let ticking = false
+
+      const handleMouseMove = (e) => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const x = (e.clientX / window.innerWidth) * 2 - 1
+            const y = -(e.clientY / window.innerHeight) * 2 + 1
+            setMousePos({ x, y })
+            ticking = false
+          })
+          ticking = true
+        }
+      }
+
+      window.addEventListener('mousemove', handleMouseMove, { passive: true })
+      return () => window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [isMobile])
 
   return (
     <Canvas
-      camera={{ position: [0, 0, 6], fov: 50 }}
+      camera={{ position: [0, 0, isMobile ? 5 : 6], fov: isMobile ? 60 : 50 }}
       style={{ background: 'transparent' }}
-      dpr={[1, 2]}
+      dpr={isMobile ? [1, 1.5] : [1, 2]}
       gl={{ 
         alpha: true,
-        antialias: true,
-        powerPreference: 'high-performance'
+        antialias: !isMobile, // Disable antialiasing on mobile for performance
+        powerPreference: isMobile ? 'default' : 'high-performance'
       }}
       frameloop="always"
     >
@@ -243,16 +260,18 @@ const SkillsDiamond = () => {
       <pointLight position={[10, 10, 10]} intensity={0.8} color="#3b82f6" />
       <pointLight position={[-10, -10, -10]} intensity={0.4} color="#60a5fa" />
 
-      <AdvancedDiamond scrollProgress={scrollProgress} mousePos={mousePos} />
+      <AdvancedDiamond scrollProgress={scrollProgress} mousePos={mousePos} isMobile={isMobile} />
 
-      <EffectComposer>
-        <Bloom
-          intensity={0.6}
-          luminanceThreshold={0.3}
-          luminanceSmoothing={0.9}
-          height={300}
-        />
-      </EffectComposer>
+      {!isMobile && (
+        <EffectComposer>
+          <Bloom
+            intensity={0.6}
+            luminanceThreshold={0.3}
+            luminanceSmoothing={0.9}
+            height={300}
+          />
+        </EffectComposer>
+      )}
     </Canvas>
   )
 }

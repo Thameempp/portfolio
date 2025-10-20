@@ -57,15 +57,41 @@ const About = () => {
   }
 
   const details = [
-    { icon: FaMapMarkerAlt, label: 'Location', value: 'Malappuram, India', color: 'text-blue-400' },
-    { icon: FaBriefcase, label: 'Role', value: 'AI/ML Engineer', color: 'text-purple-400' },
-    { icon: FaGraduationCap, label: 'Education', value: 'Bachelor of Science', color: 'text-green-400' },
-    { icon: FaRocket, label: 'Passion', value: 'AI & Innovation', color: 'text-orange-400' }
+    { 
+      icon: FaMapMarkerAlt, 
+      label: 'Location', 
+      value: 'Malappuram, India', 
+      color: 'text-blue-400' 
+    },
+    { 
+      icon: FaBriefcase, 
+      label: 'Role', 
+      value: 'AI/ML Engineer', 
+      color: 'text-purple-400' 
+    },
+    { 
+      icon: FaGraduationCap, 
+      label: 'Education', 
+      value: 'Bachelor of Science', 
+      color: 'text-green-400',
+      status: 'ongoing', // Change to: 'ongoing', 'completed', or 'pursuing'
+      statusConfig: {
+        ongoing: { label: 'Ongoing', color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' },
+        completed: { label: 'Completed', color: 'bg-green-500/20 text-green-400 border-green-500/30' },
+        pursuing: { label: 'Pursuing', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' }
+      }
+    },
+    { 
+      icon: FaRocket, 
+      label: 'Passion', 
+      value: 'AI & Innovation', 
+      color: 'text-orange-400' 
+    }
   ]
 
   const qualities = [
     { icon: FaLightbulb, title: 'Problem Solving', desc: 'Creative solutions to complex challenges' },
-    { icon: FaBullseye, title: 'Detail Oriented', desc: 'Pixel-perfect implementation' },
+    { icon: FaBullseye, title: 'Detail Oriented', desc: 'Accurate and detailed implementation' },
     { icon: FaSync, title: 'Continuous Learning', desc: 'Always exploring new technologies' },
     { icon: FaHandshake, title: 'Team Player', desc: 'Collaborative and communicative' }
   ]
@@ -187,14 +213,23 @@ const About = () => {
               <div className="space-y-3">
                 {details.map((detail, index) => {
                   const IconComponent = detail.icon
+                  const statusInfo = detail.status && detail.statusConfig ? detail.statusConfig[detail.status] : null
+                  
                   return (
                     <div key={index} className="flex items-center gap-3">
                       <span className={detail.color}>
                         <IconComponent className="w-5 h-5" />
                       </span>
-                      <div>
+                      <div className="flex-1">
                         <div className="text-xs text-gray-500">{detail.label}</div>
-                        <div className="text-sm text-white">{detail.value}</div>
+                        <div className="flex items-center gap-2">
+                          <div className="text-sm text-white">{detail.value}</div>
+                          {statusInfo && (
+                            <span className={`text-[10px] px-2 py-0.5 rounded-full border ${statusInfo.color} font-medium`}>
+                              {statusInfo.label}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   )
