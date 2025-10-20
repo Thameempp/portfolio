@@ -93,26 +93,29 @@ const Hero = () => {
         transform: `translateY(${scrollProgress * -50}px) scale(${1 - scrollProgress * 0.1})`
       }}
     >
-      {/* 3D Skills Cube - Behind content on mobile */}
+      {/* 3D Skills Cube - Smaller on mobile, fully visible */}
       <div className={`absolute pointer-events-none ${
         isMobile 
-          ? 'inset-0 z-0 flex items-center justify-center opacity-20' 
+          ? 'inset-0 z-0 flex items-center justify-center opacity-20 scale-75' 
           : 'bottom-60 right-0 md:right-10 w-full md:w-[700px] h-[700px] md:h-[600px] opacity-80 z-0'
       }`}>
         <SkillsCube isMobile={isMobile} />
       </div>
 
-      {/* Content - On top for mobile, centered */}
+      {/* Content - Moved higher on mobile */}
       <div className={`${styles.heroContent} relative z-10 ${
-        isMobile ? 'flex flex-col items-center text-center px-4 pt-20' : ''
+        isMobile ? 'flex flex-col items-center text-center px-4 pt-16' : ''
       }`}>
-        <p className={`${styles.welcomeText} text-xs sm:text-sm mb-3 sm:mb-4 font-mono ${styles.fadeIn}`}>
+        {/* Welcome text - Moved to very top */}
+        <p className={`${styles.welcomeText} font-mono ${styles.fadeIn} ${
+          isMobile ? 'text-xs mb-2' : 'text-sm mb-4'
+        }`}>
           <span className="text-gray-700">{'// '}</span>Welcome to my digital space
         </p>
 
-        {/* "Hi, I'm Thameem" */}
-        <h1 className={`font-bold mb-4 sm:mb-6 ${styles.fadeIn} ${
-          isMobile ? 'text-4xl' : 'text-6xl md:text-8xl'
+        {/* "Hi, I'm Thameem" - Bigger text, moved up */}
+        <h1 className={`font-bold ${styles.fadeIn} ${
+          isMobile ? 'text-5xl mb-2' : 'text-6xl md:text-8xl mb-6'
         }`}>
           <span className={styles.greetingText}>
             H
@@ -122,12 +125,12 @@ const Hero = () => {
             </span>
             , I&apos;m 
           </span>
-          <span className="block mt-2" style={{ minHeight: isMobile ? '60px' : '100px' }}>
+          <span className="block mt-2" style={{ minHeight: isMobile ? '70px' : '100px' }}>
             <span 
               className={styles.nameGradient}
               style={{ 
                 display: 'inline-block', 
-                minWidth: isMobile ? '200px' : '300px'
+                minWidth: isMobile ? '240px' : '300px'
               }}
             >
               {displayedText || 'Thameem'}
@@ -138,9 +141,9 @@ const Hero = () => {
           </span>
         </h1>
 
-        {/* Roles */}
-        <div className={`relative overflow-hidden mb-4 sm:mb-6 ${
-          isMobile ? 'h-10 w-full flex justify-center' : 'h-10 md:h-10'
+        {/* Roles - Moved higher */}
+        <div className={`relative overflow-hidden ${
+          isMobile ? 'h-10 w-full flex justify-center mb-3' : 'h-10 md:h-10 mb-6'
         }`}>
           {roles.map((role, index) => (
             <div
@@ -160,21 +163,21 @@ const Hero = () => {
           ))}
         </div>
 
-        {/* Description - Fully visible on mobile */}
-        <p className={`${styles.descriptionText} leading-relaxed mb-6 sm:mb-10 ${
-          isMobile ? 'text-xs max-w-sm px-2' : 'text-xl max-w-2xl'
+        {/* Description */}
+        <p className={`${styles.descriptionText} leading-relaxed ${
+          isMobile ? 'text-xs max-w-sm px-2 mb-5' : 'text-xl max-w-2xl mb-10'
         }`}>
           Architecting and delivering robust, end-to-end <span className={styles.accentBlue}>AI, ML</span> systems to create efficient, scalable, high-performance solutions to tackle complex challenges via <span className={styles.accentPurple}>Data Science</span>.
         </p>
 
-        {/* Buttons - Smaller width on mobile */}
-        <div className={`flex gap-3 mb-8 sm:mb-12 ${
-          isMobile ? 'flex-col items-center w-full max-w-xs' : 'flex-wrap'
+        {/* Buttons - Increased width */}
+        <div className={`flex gap-3 ${
+          isMobile ? 'flex-col items-center w-full max-w-sm mb-6' : 'flex-wrap mb-12'
         }`}>
           <a
             href="#projects"
             className={`${styles.btnPrimary} flex items-center justify-center gap-2 group ${
-              isMobile ? 'py-2.5 px-6 text-sm' : 'px-6 py-3'
+              isMobile ? 'py-2.5 px-8 text-sm w-full' : 'px-6 py-3'
             }`}
           >
             <span>View Projects</span>
@@ -185,7 +188,7 @@ const Hero = () => {
           <a
             href="#contact"
             className={`${styles.btnSecondary} text-center ${
-              isMobile ? 'py-2.5 px-6 text-sm' : 'px-6 py-3'
+              isMobile ? 'py-2.5 px-8 text-sm w-full' : 'px-6 py-3'
             }`}
           >
             Let&apos;s Talk
@@ -193,7 +196,7 @@ const Hero = () => {
           <a
             href="#about"
             className={`${styles.btnTertiary} flex items-center justify-center gap-2 ${
-              isMobile ? 'py-2.5 px-6 text-sm' : 'px-6 py-3'
+              isMobile ? 'py-2.5 px-8 text-sm w-full' : 'px-6 py-3'
             }`}
           >
             <span>Learn more</span>
@@ -204,8 +207,8 @@ const Hero = () => {
         </div>
 
         {/* Tech Tags */}
-        <div className={`border-t border-b border-gray-800 py-4 sm:py-6 overflow-hidden ${
-          isMobile ? 'w-full' : ''
+        <div className={`border-t border-b border-gray-800 overflow-hidden ${
+          isMobile ? 'w-full py-3' : 'py-6'
         }`}>
           <div className={`flex items-center gap-4 sm:gap-8 ${styles.techTagMarquee}`}>
             {['Python', 'React', 'FastAPI', 'TensorFlow', 'PostgreSQL', 'Docker', 'TypeScript', 'OpenAI'].map((tech, index) => (
