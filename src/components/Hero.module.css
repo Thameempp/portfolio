@@ -1,0 +1,395 @@
+/* ============================================
+   HERO SECTION - COLOR CUSTOMIZATION
+   Change colors easily here!
+   ============================================ */
+
+/* ========== NAME GRADIENT ========== */
+.nameGradient {
+  background: linear-gradient(to right, #c9deff, #60a5fa, #5c80f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Alternative Name Gradients - Uncomment to use */
+.nameGradientCyan {
+  background: linear-gradient(to right, #06b6d4, #22d3ee, #67e8f9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.nameGradientPurple {
+  background: linear-gradient(to right, #8b5cf6, #a78bfa, #c084fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.nameGradientGreen {
+  background: linear-gradient(to right, #10b981, #34d399, #6ee7b7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.nameGradientOrange {
+  background: linear-gradient(to right, #f97316, #fb923c, #fdba74);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.nameGradientPink {
+  background: linear-gradient(to right, #ec4899, #f472b6, #fbbf24);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ========== TEXT COLORS ========== */
+.welcomeText {
+  color: #6b7280; /* Gray-500 */
+}
+
+.greetingText {
+  color: #d1d5db; /* Gray-300 */
+}
+
+.roleText {
+  color: #ffffff; /* White */
+  font-weight: 600;
+}
+
+.descriptionText {
+  color: #9ca3af; /* Gray-400 */
+}
+
+/* ========== ACCENT COLORS ========== */
+.accentBlue {
+  color: #60a5fa; /* Blue-400 */
+  font-weight: 600;
+}
+
+.accentPurple {
+  color: #a78bfa; /* Purple-400 */
+  font-weight: 600;
+}
+
+.accentGreen {
+  color: #34d399; /* Emerald-400 */
+  font-weight: 600;
+}
+
+.accentCyan {
+  color: #22d3ee; /* Cyan-400 */
+  font-weight: 600;
+}
+
+/* ========== CURSOR/TYPING INDICATOR ========== */
+.cursor {
+  color: #60a5fa; /* Blue-400 */
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+/* ========== BUTTONS ========== */
+.btnPrimary {
+  background-color: #ffffff;
+  color: #111827;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.btnPrimary:hover {
+  background-color: #f3f4f6;
+  transform: scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.btnSecondary {
+  border: 2px solid #374151;
+  color: #d1d5db;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  background-color: transparent;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.btnSecondary:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.btnTertiary {
+  color: #9ca3af;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.btnTertiary:hover {
+  color: #ffffff;
+}
+
+/* ========== TECH STACK TAGS ========== */
+.techTag {
+  color: #6b7280; /* Gray-500 */
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.techTagMarquee {
+  animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ========== SCROLL INDICATOR ========== */
+.scrollIndicator {
+  width: 1px;
+  height: 4rem;
+  background: linear-gradient(to bottom, #374151, transparent);
+}
+
+/* ========== RESPONSIVE ADJUSTMENTS ========== */
+@media (max-width: 768px) {
+  .nameGradient {
+    font-size: 3rem;
+  }
+  
+  .btnPrimary,
+  .btnSecondary {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* ========== ANIMATIONS ========== */
+.fadeIn {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.slideUp {
+  animation: slideUp 0.7s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== SECTION WRAPPER ========== */
+.heroSection {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+/* ========== CONTENT CONTAINER ========== */
+.heroContent {
+  max-width: 80rem;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+
+/* ========== ANIMATED SCROLL ARROW ========== */
+.scrollArrow {
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Bounce animation for arrows */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.5;
+  }
+}
+/* ========== REMOVE DEFAULT FOCUS OUTLINE ========== */
+button:focus,
+a:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: none !important;
+}
+
+/* ========== CUSTOM BUTTON FOCUS ANIMATIONS ========== */
+.btnPrimary:focus,
+.btnPrimary:focus-visible {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.btnSecondary:focus,
+.btnSecondary:focus-visible {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.btnTertiary:focus,
+.btnTertiary:focus-visible {
+  color: #60a5fa;
+  text-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+}
+@keyframes dotFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: 0 0 25px rgba(59, 130, 246, 1);
+  }
+}
+
+.animatedDot {
+  animation: dotFloat 2s ease-in-out infinite;
+}
+/* Animate the dot on the letter i */
+.greetingText {
+  position: relative;
+}
+
+/* Target the dot specifically */
+@keyframes dotPulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 10px rgba(147, 197, 253, 0.8),
+      0 0 20px rgba(59, 130, 246, 0.6),
+      0 0 30px rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    text-shadow: 
+      0 0 20px rgba(147, 197, 253, 1),
+      0 0 40px rgba(59, 130, 246, 0.8),
+      0 0 60px rgba(59, 130, 246, 0.6);
+  }
+}
+
+@keyframes dotFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animatedI {
+  display: inline-block;
+  animation: dotFloat 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.8));
+}
+
+.animatedI::before {
+  animation: dotPulse 2s ease-in-out infinite;
+}
+/* Hide the original dot and add animated custom dot */
+.dotContainer {
+  position: relative;
+  display: inline-block;
+}
+
+/* Hide original i dot using a creative approach */
+.noDot {
+  position: relative;
+}
+
+
+
+/* Animated custom dot - WHITE and correctly positioned */
+@keyframes dotBounce {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -6px);
+  }
+}
+
+@keyframes dotGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+}
+
+.customDot {
+  position: absolute;
+  top: 0.10em;  /* Lower position - closer to i */
+  /* left: 40%; */
+  right: -25%;
+  width: 0.18em;  /* Slightly smaller */
+  height: 0.18em;
+  background: #d1d5db;  /* WHITE color */
+  border-radius: 50%;
+  animation: dotBounce 3s ease-in-out infinite, dotGlow 2s ease-in-out infinite;
+}
