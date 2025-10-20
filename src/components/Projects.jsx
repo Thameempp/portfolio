@@ -39,7 +39,7 @@ const Projects = () => {
       tech: ['JavaScript', 'Python', 'SQLite'],
       link: '#',
       demoLink: '#',
-      githubLink: '#',
+      githubLink: 'https://github.com/Thameempp/MenuOrderManagement-proj',
       features: ['Admin Dashboard', 'Order Tracking', 'Inventory Management'],
       image: project3Image // Add image
     },
@@ -49,7 +49,7 @@ const Projects = () => {
       tech: ['React', 'Node.js', 'Socket.io', 'MongoDB'],
       link: '#',
       demoLink: '#',
-      githubLink: '#',
+      githubLink: 'https://github.com/Thameempp/AI_Chat_streaming_app',
       features: ['End-to-End Encryption', 'File Sharing', 'Group Chats'],
       image: project4Image // Add image
     }
