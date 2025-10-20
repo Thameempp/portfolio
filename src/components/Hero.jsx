@@ -29,10 +29,9 @@ const Hero = () => {
     'ML Ops Enthusiast'
   ]
 
-  // Detect mobile/tablet
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024) // Mobile + Tablet
+      setIsMobile(window.innerWidth < 1024)
     }
     
     checkMobile()
@@ -94,23 +93,23 @@ const Hero = () => {
         transform: `translateY(${scrollProgress * -50}px) scale(${1 - scrollProgress * 0.1})`
       }}
     >
-      {/* 3D Skills Cube - Mobile & Tablet Optimized */}
+      {/* 3D Skills Cube */}
       <div className={`absolute pointer-events-none z-0 ${
         isMobile 
-          ? 'top-20 right-0 w-full h-[300px] opacity-40' 
+          ? 'top-16 right-0 w-full h-[350px] opacity-30' 
           : 'bottom-60 right-0 md:right-10 w-full md:w-[700px] h-[700px] md:h-[600px] opacity-80'
       }`}>
         <SkillsCube isMobile={isMobile} />
       </div>
 
-      <div className={`${styles.heroContent} ${isMobile ? 'px-6' : ''}`}>
+      <div className={`${styles.heroContent} ${isMobile ? 'px-6 relative z-10' : ''}`}>
         <p className={`${styles.welcomeText} text-xs sm:text-sm mb-3 sm:mb-4 font-mono ${styles.fadeIn}`}>
           <span className="text-gray-700">{'// '}</span>Welcome to my digital space
         </p>
 
-        {/* Fixed H1 - "Hi, I'm Thameem" */}
+        {/* Fixed: "Hi, I'm Thameem" - Now Visible */}
         <h1 className={`font-bold mb-4 sm:mb-6 ${styles.fadeIn} ${
-          isMobile ? 'text-3xl' : 'text-6xl md:text-8xl'
+          isMobile ? 'text-4xl' : 'text-6xl md:text-8xl'
         }`}>
           <span className={styles.greetingText}>
             H
@@ -120,13 +119,12 @@ const Hero = () => {
             </span>
             , I&apos;m 
           </span>
-          <span className="block mt-2" style={{ minHeight: isMobile ? '50px' : '100px' }}>
+          <span className="block mt-2" style={{ minHeight: isMobile ? '60px' : '100px' }}>
             <span 
               className={styles.nameGradient}
               style={{ 
                 display: 'inline-block', 
-                minWidth: isMobile ? '180px' : '300px',
-                fontSize: isMobile ? '2rem' : 'inherit'
+                minWidth: isMobile ? '200px' : '300px'
               }}
             >
               {displayedText || 'Thameem'}
@@ -137,7 +135,7 @@ const Hero = () => {
           </span>
         </h1>
 
-        {/* Roles Section */}
+        {/* Roles */}
         <div className={`relative overflow-hidden mb-4 sm:mb-6 ${
           isMobile ? 'h-10' : 'h-10 md:h-10'
         }`}>
@@ -164,17 +162,17 @@ const Hero = () => {
           Architecting and delivering robust, end-to-end <span className={styles.accentBlue}>AI, ML</span> systems to create efficient, scalable, high-performance solutions to tackle complex challenges via <span className={styles.accentPurple}>Data Science</span>.
         </p>
 
-        {/* Buttons - Mobile Optimized */}
+        {/* Buttons - Fixed Width for Mobile */}
         <div className={`flex gap-3 mb-8 sm:mb-12 ${
-          isMobile ? 'flex-col w-full' : 'flex-wrap'
+          isMobile ? 'flex-col' : 'flex-wrap'
         }`}>
           <a
             href="#projects"
             className={`${styles.btnPrimary} flex items-center justify-center gap-2 group ${
-              isMobile ? 'w-full py-3' : 'px-6 py-3'
+              isMobile ? 'py-3 px-5 text-sm' : 'px-6 py-3'
             }`}
           >
-            <span className={isMobile ? 'text-sm' : ''}>View Projects</span>
+            <span>View Projects</span>
             <svg className={`group-hover:translate-x-1 transition-transform ${isMobile ? 'w-4 h-4' : 'w-5 h-5'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
@@ -182,7 +180,7 @@ const Hero = () => {
           <a
             href="#contact"
             className={`${styles.btnSecondary} ${
-              isMobile ? 'w-full py-3 text-sm text-center' : 'px-6 py-3'
+              isMobile ? 'py-3 px-5 text-sm text-center' : 'px-6 py-3'
             }`}
           >
             Let&apos;s Talk
@@ -190,10 +188,10 @@ const Hero = () => {
           <a
             href="#about"
             className={`${styles.btnTertiary} flex items-center justify-center gap-2 ${
-              isMobile ? 'w-full py-3' : 'px-6 py-3'
+              isMobile ? 'py-3 px-5 text-sm' : 'px-6 py-3'
             }`}
           >
-            <span className={isMobile ? 'text-sm' : ''}>Learn more</span>
+            <span>Learn more</span>
             <svg className={isMobile ? 'w-3 h-3' : 'w-4 h-4'} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
@@ -217,7 +215,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Animated Scroll Arrow */}
+      {/* Scroll Arrow */}
       <button
         onClick={scrollToAbout}
         className={`absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 sm:gap-2 text-gray-400 hover:text-blue-400 transition-all cursor-pointer group ${
@@ -234,7 +232,6 @@ const Hero = () => {
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
-              style={{ animationDelay: '0s' }}
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
