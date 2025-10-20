@@ -93,20 +93,24 @@ const Hero = () => {
         transform: `translateY(${scrollProgress * -50}px) scale(${1 - scrollProgress * 0.1})`
       }}
     >
-      {/* 3D Skills Cube */}
+      {/* 3D Skills Cube - Moved to right center, increased opacity */}
       <div className={`absolute pointer-events-none ${
         isMobile 
-          ? 'inset-0 z-0 flex items-center justify-center opacity-20 scale-75' 
+          ? 'inset-0 z-0 flex items-center justify-center opacity-30 scale-75' 
           : 'bottom-60 right-0 md:right-10 w-full md:w-[700px] h-[700px] md:h-[600px] opacity-80 z-0'
-      }`}>
+      }`}
+      style={isMobile ? { 
+        transform: 'translateX(15%)' 
+      } : {}}
+      >
         <SkillsCube isMobile={isMobile} />
       </div>
 
-      {/* Content - Much less top padding */}
+      {/* Content */}
       <div className={`${styles.heroContent} relative z-10 ${
         isMobile ? 'flex flex-col items-center text-center px-4 pt-24' : ''
       }`}>
-        {/* Welcome text - More bottom margin */}
+        {/* Welcome text */}
         <p className={`${styles.welcomeText} font-mono ${styles.fadeIn} ${
           isMobile ? 'text-base mb-2' : 'text-sm mb-4'
         }`}>
