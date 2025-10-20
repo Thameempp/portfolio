@@ -93,7 +93,7 @@ const Hero = () => {
         transform: `translateY(${scrollProgress * -50}px) scale(${1 - scrollProgress * 0.1})`
       }}
     >
-      {/* 3D Skills Cube - Smaller on mobile, fully visible */}
+      {/* 3D Skills Cube */}
       <div className={`absolute pointer-events-none ${
         isMobile 
           ? 'inset-0 z-0 flex items-center justify-center opacity-20 scale-75' 
@@ -102,18 +102,18 @@ const Hero = () => {
         <SkillsCube isMobile={isMobile} />
       </div>
 
-      {/* Content - Moved MUCH closer to navbar */}
+      {/* Content - Much less top padding */}
       <div className={`${styles.heroContent} relative z-10 ${
-        isMobile ? 'flex flex-col items-center text-center px-4 pt-20' : ''
+        isMobile ? 'flex flex-col items-center text-center px-4 pt-24' : ''
       }`}>
-        {/* Welcome text - Bigger */}
+        {/* Welcome text - More bottom margin */}
         <p className={`${styles.welcomeText} font-mono ${styles.fadeIn} ${
-          isMobile ? 'text-base mb-0' : 'text-sm mb-4'
+          isMobile ? 'text-base mb-2' : 'text-sm mb-4'
         }`}>
           <span className="text-gray-700">{'// '}</span>Welcome to my digital space
         </p>
 
-        {/* "Hi, I'm Thameem" - MUCH bigger */}
+        {/* "Hi, I'm Thameem" */}
         <h1 className={`font-bold ${styles.fadeIn} ${
           isMobile ? 'text-7xl mb-2' : 'text-6xl md:text-8xl mb-6'
         }`}>
