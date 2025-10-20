@@ -106,16 +106,16 @@ const Hero = () => {
       <div className={`${styles.heroContent} relative z-10 ${
         isMobile ? 'flex flex-col items-center text-center px-4 pt-16' : ''
       }`}>
-        {/* Welcome text - Moved to very top */}
+        {/* Welcome text - Bigger and moved to top (mb-0) */}
         <p className={`${styles.welcomeText} font-mono ${styles.fadeIn} ${
-          isMobile ? 'text-xs mb-2' : 'text-sm mb-4'
+          isMobile ? 'text-sm mb-0' : 'text-sm mb-4'
         }`}>
           <span className="text-gray-700">{'// '}</span>Welcome to my digital space
         </p>
 
-        {/* "Hi, I'm Thameem" - Bigger text, moved up */}
+        {/* "Hi, I'm Thameem" - Even bigger and closer to welcome text */}
         <h1 className={`font-bold ${styles.fadeIn} ${
-          isMobile ? 'text-5xl mb-2' : 'text-6xl md:text-8xl mb-6'
+          isMobile ? 'text-6xl mb-2' : 'text-6xl md:text-8xl mb-6'
         }`}>
           <span className={styles.greetingText}>
             H
@@ -125,12 +125,12 @@ const Hero = () => {
             </span>
             , I&apos;m 
           </span>
-          <span className="block mt-2" style={{ minHeight: isMobile ? '70px' : '100px' }}>
+          <span className="block mt-2" style={{ minHeight: isMobile ? '75px' : '100px' }}>
             <span 
               className={styles.nameGradient}
               style={{ 
                 display: 'inline-block', 
-                minWidth: isMobile ? '240px' : '300px'
+                minWidth: isMobile ? '260px' : '300px'
               }}
             >
               {displayedText || 'Thameem'}
