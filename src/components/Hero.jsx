@@ -29,10 +29,10 @@ const Hero = () => {
     'ML Ops Enthusiast'
   ]
 
-  // Detect mobile on mount
+  // Detect mobile/tablet
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(window.innerWidth < 1024) // Mobile + Tablet
     }
     
     checkMobile()
@@ -94,17 +94,24 @@ const Hero = () => {
         transform: `translateY(${scrollProgress * -50}px) scale(${1 - scrollProgress * 0.1})`
       }}
     >
-      {/* 3D Skills Cube - Mobile Optimized */}
-      <div className={`absolute ${isMobile ? 'bottom-20 right-0 w-full h-[400px] opacity-60' : 'bottom-60 right-0 md:right-10 w-full md:w-[700px] h-[700px] md:h-[600px] opacity-80'} pointer-events-none z-0`}>
+      {/* 3D Skills Cube - Mobile & Tablet Optimized */}
+      <div className={`absolute pointer-events-none z-0 ${
+        isMobile 
+          ? 'top-20 right-0 w-full h-[300px] opacity-40' 
+          : 'bottom-60 right-0 md:right-10 w-full md:w-[700px] h-[700px] md:h-[600px] opacity-80'
+      }`}>
         <SkillsCube isMobile={isMobile} />
       </div>
 
-      <div className={styles.heroContent}>
-        <p className={`${styles.welcomeText} text-xs md:text-sm mb-4 font-mono ${styles.fadeIn}`}>
+      <div className={`${styles.heroContent} ${isMobile ? 'px-6' : ''}`}>
+        <p className={`${styles.welcomeText} text-xs sm:text-sm mb-3 sm:mb-4 font-mono ${styles.fadeIn}`}>
           <span className="text-gray-700">{'// '}</span>Welcome to my digital space
         </p>
 
-        <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6 ${styles.fadeIn}`}>
+        {/* Fixed H1 - "Hi, I'm Thameem" */}
+        <h1 className={`font-bold mb-4 sm:mb-6 ${styles.fadeIn} ${
+          isMobile ? 'text-3xl' : 'text-6xl md:text-8xl'
+        }`}>
           <span className={styles.greetingText}>
             H
             <span className={styles.dotContainer}>
@@ -113,10 +120,14 @@ const Hero = () => {
             </span>
             , I&apos;m 
           </span>
-          <span className="block mt-2" style={{ minHeight: isMobile ? '60px' : '100px' }}>
+          <span className="block mt-2" style={{ minHeight: isMobile ? '50px' : '100px' }}>
             <span 
               className={styles.nameGradient}
-              style={{ display: 'inline-block', minWidth: isMobile ? '200px' : '300px' }}
+              style={{ 
+                display: 'inline-block', 
+                minWidth: isMobile ? '180px' : '300px',
+                fontSize: isMobile ? '2rem' : 'inherit'
+              }}
             >
               {displayedText || 'Thameem'}
             </span>
@@ -126,61 +137,79 @@ const Hero = () => {
           </span>
         </h1>
 
-        <div className={`h-8 md:h-10 mb-6 relative overflow-hidden ${isMobile ? 'text-center' : ''}`}>
+        {/* Roles Section */}
+        <div className={`relative overflow-hidden mb-4 sm:mb-6 ${
+          isMobile ? 'h-10' : 'h-10 md:h-10'
+        }`}>
           {roles.map((role, index) => (
             <div
               key={index}
-              className={`absolute inset-0 flex items-center ${isMobile ? 'justify-center' : ''} transition-all duration-500 ${
+              className={`absolute inset-0 flex items-center transition-all duration-500 ${
                 currentRole === index
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-8'
               }`}
             >
-              <span className={`${styles.roleText} text-base md:text-xl`}>{role}</span>
+              <span className={`${styles.roleText} ${isMobile ? 'text-base' : 'text-xl'}`}>
+                {role}
+              </span>
             </div>
           ))}
         </div>
 
-        <p className={`text-sm md:text-xl ${styles.descriptionText} mb-10 max-w-2xl leading-relaxed ${isMobile ? 'text-center mx-auto' : ''}`}>
+        {/* Description */}
+        <p className={`${styles.descriptionText} leading-relaxed mb-6 sm:mb-10 max-w-2xl ${
+          isMobile ? 'text-sm' : 'text-xl'
+        }`}>
           Architecting and delivering robust, end-to-end <span className={styles.accentBlue}>AI, ML</span> systems to create efficient, scalable, high-performance solutions to tackle complex challenges via <span className={styles.accentPurple}>Data Science</span>.
         </p>
 
-        <div className={`flex flex-wrap gap-3 md:gap-4 mb-12 ${isMobile ? 'justify-center' : ''}`}>
+        {/* Buttons - Mobile Optimized */}
+        <div className={`flex gap-3 mb-8 sm:mb-12 ${
+          isMobile ? 'flex-col w-full' : 'flex-wrap'
+        }`}>
           <a
             href="#projects"
-            className={`${styles.btnPrimary} flex items-center gap-2 group text-sm md:text-base px-4 md:px-6 py-2.5 md:py-3`}
+            className={`${styles.btnPrimary} flex items-center justify-center gap-2 group ${
+              isMobile ? 'w-full py-3' : 'px-6 py-3'
+            }`}
           >
-            <span>View Projects</span>
-            <svg className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <span className={isMobile ? 'text-sm' : ''}>View Projects</span>
+            <svg className={`group-hover:translate-x-1 transition-transform ${isMobile ? 'w-4 h-4' : 'w-5 h-5'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
           <a
             href="#contact"
-            className={`${styles.btnSecondary} text-sm md:text-base px-4 md:px-6 py-2.5 md:py-3`}
+            className={`${styles.btnSecondary} ${
+              isMobile ? 'w-full py-3 text-sm text-center' : 'px-6 py-3'
+            }`}
           >
             Let&apos;s Talk
           </a>
           <a
             href="#about"
-            className={`${styles.btnTertiary} flex items-center gap-2 text-sm md:text-base px-4 md:px-6 py-2.5 md:py-3`}
+            className={`${styles.btnTertiary} flex items-center justify-center gap-2 ${
+              isMobile ? 'w-full py-3' : 'px-6 py-3'
+            }`}
           >
-            <span>Learn more</span>
-            <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <span className={isMobile ? 'text-sm' : ''}>Learn more</span>
+            <svg className={isMobile ? 'w-3 h-3' : 'w-4 h-4'} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </a>
         </div>
 
-        <div className="border-t border-b border-gray-800 py-4 md:py-6 overflow-hidden">
-          <div className={`flex items-center gap-4 md:gap-8 ${styles.techTagMarquee}`}>
+        {/* Tech Tags */}
+        <div className="border-t border-b border-gray-800 py-4 sm:py-6 overflow-hidden">
+          <div className={`flex items-center gap-4 sm:gap-8 ${styles.techTagMarquee}`}>
             {['Python', 'React', 'FastAPI', 'TensorFlow', 'PostgreSQL', 'Docker', 'TypeScript', 'OpenAI'].map((tech, index) => (
-              <span key={index} className={`${styles.techTag} text-xs md:text-sm`}>
+              <span key={index} className={`${styles.techTag} ${isMobile ? 'text-xs' : 'text-sm'}`}>
                 {tech}
               </span>
             ))}
             {['Python', 'React', 'FastAPI', 'TensorFlow', 'PostgreSQL', 'Docker', 'TypeScript', 'OpenAI'].map((tech, index) => (
-              <span key={`dup-${index}`} className={`${styles.techTag} text-xs md:text-sm`}>
+              <span key={`dup-${index}`} className={`${styles.techTag} ${isMobile ? 'text-xs' : 'text-sm'}`}>
                 {tech}
               </span>
             ))}
@@ -191,7 +220,9 @@ const Hero = () => {
       {/* Animated Scroll Arrow */}
       <button
         onClick={scrollToAbout}
-        className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 md:gap-2 text-gray-400 hover:text-blue-400 transition-all cursor-pointer group"
+        className={`absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 sm:gap-2 text-gray-400 hover:text-blue-400 transition-all cursor-pointer group ${
+          isMobile ? 'bottom-6' : 'bottom-8'
+        }`}
         aria-label="Scroll to next section"
       >
         <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">Scroll</span>
@@ -199,7 +230,7 @@ const Hero = () => {
           <div className={styles.scrollIndicator}></div>
           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex flex-col gap-1">
             <svg 
-              className="w-3 h-3 md:w-4 md:h-4 animate-bounce" 
+              className={`animate-bounce ${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`}
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"

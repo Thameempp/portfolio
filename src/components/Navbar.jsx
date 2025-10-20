@@ -60,6 +60,18 @@ const Navbar = () => {
     setTimeout(() => setClickedItem(''), 400)
   }
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpen && !event.target.closest('nav')) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [isOpen])
+
   return (
     <nav 
       className={`fixed w-full z-50 transition-all duration-500 ease-in-out ${
@@ -72,9 +84,9 @@ const Navbar = () => {
         transition: 'border-color 0.5s ease-in-out, background-color 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out'
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-center items-center h-16">
-          {/* Desktop Menu - Centered */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+        <div className="flex justify-center items-center h-14 sm:h-16 relative">
+          {/* Desktop Menu - Centered (unchanged) */}
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => {
               const isActive = activeSection === item.id
@@ -105,14 +117,19 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Top Right Corner */}
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-white hover:text-blue-400 transition-all"
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsOpen(!isOpen)
+            }}
+            className="md:hidden absolute right-0 p-2 text-white hover:text-blue-400 transition-all rounded-lg hover:bg-gray-800/50 active:scale-95"
             aria-label="Toggle menu"
           >
             <svg 
-              className="w-6 h-6 transition-transform duration-300"
+              className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 ${
+                isOpen ? 'rotate-90' : 'rotate-0'
+              }`}
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -136,13 +153,13 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile/Tablet Menu */}
         <div 
           className={`md:hidden transition-all duration-300 overflow-hidden ${
-            isOpen ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0'
+            isOpen ? 'max-h-[500px] opacity-100 pb-3' : 'max-h-0 opacity-0'
           }`}
         >
-          <div className="bg-black/95 backdrop-blur-md rounded-lg mt-2 p-2 border border-gray-800">
+          <div className="bg-black/95 backdrop-blur-md rounded-xl mt-2 p-2 border border-gray-800 shadow-xl">
             {navItems.map((item, index) => {
               const isActive = activeSection === item.id
               const isClicked = clickedItem === item.id
@@ -151,25 +168,33 @@ const Navbar = () => {
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation()
                     handleClick(item.id)
-                    setTimeout(() => setIsOpen(false), 200)
+                    setTimeout(() => setIsOpen(false), 300)
                   }}
-                  className={`block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  className={`block px-4 py-2.5 sm:py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
                     isActive 
-                      ? 'bg-blue-600 text-white' 
-                      : 'text-gray-300 hover:bg-gray-900 hover:text-white'
+                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/50' 
+                      : 'text-gray-300 hover:bg-gray-800/80 hover:text-white active:bg-gray-700'
                   }`}
                   style={{
-                    transitionDelay: isOpen ? `${index * 50}ms` : '0ms'
+                    transitionDelay: isOpen ? `${index * 40}ms` : '0ms',
+                    transform: isOpen ? 'translateX(0)' : 'translateX(-20px)'
                   }}
                 >
                   <span className={`transition-all duration-200 ${
-                    isClicked ? 'opacity-70' : 'opacity-100'
+                    isClicked ? 'opacity-70 scale-95' : 'opacity-100 scale-100'
                   } flex items-center justify-between`}>
-                    {item.label}
+                    <span className="flex items-center gap-2">
+                      {/* Icon indicator */}
+                      <span className={`w-1.5 h-1.5 rounded-full transition-all ${
+                        isActive ? 'bg-white' : 'bg-gray-600'
+                      }`}></span>
+                      {item.label}
+                    </span>
                     {isActive && (
-                      <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+                      <span className="w-2 h-2 bg-blue-300 rounded-full animate-pulse"></span>
                     )}
                   </span>
                 </a>
@@ -178,6 +203,14 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Overlay for mobile menu */}
+      {isOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm -z-10"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
     </nav>
   )
 }
