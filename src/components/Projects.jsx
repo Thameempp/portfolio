@@ -1,59 +1,29 @@
 import { useState, useEffect, useRef } from 'react'
-
-// Import your project images
-import project1Image from '../assets/projects/project1.jpg'
-import project2Image from '../assets/projects/project2.jpg'
-import project3Image from '../assets/projects/project3.jpg'
-import project4Image from '../assets/projects/project4.jpg'
+import { dbService } from '../services/db'
 
 const Projects = () => {
   const [hoveredProject, setHoveredProject] = useState(null)
   const [scrollOffset, setScrollOffset] = useState(0)
   const [showAllProjects, setShowAllProjects] = useState(false)
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
   const sectionRef = useRef(null)
 
-  const projects = [
-    {
-      title: 'AI Video Generator',
-      description: 'Educational platform with AI-powered video generation, voice synthesis, and live tutorials',
-      tech: ['React', 'FastAPI', 'AI APIs', 'FFmpeg'],
-      link: '#',
-      demoLink: '#',
-      githubLink: '#',
-      features: ['Voice Synthesis', 'Live Tutorials', 'Video Generation'],
-      image: project1Image // Add image
-    },
-    {
-      title: 'Task Tracker',
-      description: 'Comprehensive task management system with mentor-student architecture and progress analytics',
-      tech: ['React', 'FastAPI', 'PostgreSQL', 'JWT'],
-      link: '#',
-      demoLink: '#',
-      githubLink: '#',
-      features: ['Progress Analytics', 'Real-time Tracking', 'Leaderboards'],
-      image: project2Image // Add image
-    },
-    {
-      title: 'Food Ordering System',
-      description: 'Full-stack ordering platform with admin dashboard and customer management',
-      tech: ['JavaScript', 'Python', 'SQLite'],
-      link: '#',
-      demoLink: '#',
-      githubLink: 'https://github.com/Thameempp/MenuOrderManagement-proj',
-      features: ['Admin Dashboard', 'Order Tracking', 'Inventory Management'],
-      image: project3Image // Add image
-    },
-    {
-      title: 'AI Chat App',
-      description: 'WebSocket-based messaging platform with end-to-end encryption',
-      tech: ['React', 'Node.js', 'Socket.io', 'MongoDB'],
-      link: '#',
-      demoLink: '#',
-      githubLink: 'https://github.com/Thameempp/AI_Chat_streaming_app',
-      features: ['End-to-End Encryption', 'File Sharing', 'Group Chats'],
-      image: project4Image // Add image
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const data = await dbService.getCollection('projects')
+        if (data && data.length > 0) {
+          setProjects(data)
+        }
+      } catch (e) {
+        console.error("Failed to load projects from Firebase", e)
+      } finally {
+        setLoading(false)
+      }
     }
-  ]
+    fetchProjects()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,7 +31,7 @@ const Projects = () => {
         const rect = sectionRef.current.getBoundingClientRect()
         const windowHeight = window.innerHeight
         const sectionHeight = rect.height
-        
+
         if (rect.top < windowHeight && rect.bottom > 0) {
           const scrollProgress = (windowHeight - rect.top) / (windowHeight + sectionHeight)
           const offset = scrollProgress * 3000
@@ -77,9 +47,9 @@ const Projects = () => {
 
   return (
     <>
-      <section 
+      <section
         ref={sectionRef}
-        id="projects" 
+        id="projects"
         className="py-20 px-4 bg-transparent relative overflow-hidden"
         style={{ minHeight: '100vh' }}
       >
@@ -94,7 +64,7 @@ const Projects = () => {
           </div>
 
           <div className="relative overflow-hidden py-8">
-            <div 
+            <div
               className="flex gap-6"
               style={{
                 transform: `translateX(calc(100% - ${scrollOffset}px))`,
@@ -109,16 +79,16 @@ const Projects = () => {
                   onMouseLeave={() => setHoveredProject(null)}
                 >
                   <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 hover:border-gray-600 transition-all duration-300 hover:shadow-xl hover:shadow-black/50 hover:-translate-y-1 h-full flex flex-col">
-                    
+
                     {/* Image Preview Section */}
                     <div className="relative h-48 bg-gradient-to-br from-gray-700 to-gray-800 overflow-hidden">
                       {/* Project Image */}
-                      <img 
-                        src={project.image} 
+                      <img
+                        src={project.image}
                         alt={project.title}
                         className="absolute inset-0 w-full h-full object-cover transition-all duration-300"
                       />
-                      
+
                       {/* Code Preview Overlay (shows on hover) */}
                       <div className={`absolute inset-0 p-3 transition-all duration-300 ${hoveredProject === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
                         <div className="bg-gray-900/95 rounded-lg h-full p-2 border border-gray-700">
@@ -141,7 +111,7 @@ const Projects = () => {
                       <div className={`absolute inset-0 flex items-center justify-center gap-3 transition-all duration-300 ${hoveredProject === index ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                         {/* Blur background */}
                         <div className="absolute inset-0 bg-gray-900/70 backdrop-blur-md"></div>
-                        
+
                         {/* Buttons */}
                         <a href={project.demoLink} className="relative z-10 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg font-medium hover:bg-blue-500 transition-all shadow-lg hover:scale-105">
                           Demo
@@ -231,8 +201,8 @@ const Projects = () => {
               {projects.map((project, index) => (
                 <div key={index} className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 hover:border-gray-600 transition-all hover:-translate-y-1">
                   <div className="relative h-40 bg-gradient-to-br from-gray-700 to-gray-800 overflow-hidden">
-                    <img 
-                      src={project.image} 
+                    <img
+                      src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover"
                     />
