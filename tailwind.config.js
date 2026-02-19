@@ -100,6 +100,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['Fira Code', 'monospace'],
+        indie: ['Indie Flower', 'cursive'],
       },
       boxShadow: {
         'glow-sm': '0 0 10px rgba(59, 130, 246, 0.5)',

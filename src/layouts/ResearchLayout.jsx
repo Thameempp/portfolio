@@ -141,7 +141,7 @@ const ResearchLayout = () => {
     }
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen bg-black text-gray-300 font-sans selection:bg-blue-500/30">
+        <div className="flex flex-col md:flex-row min-h-screen bg-black text-gray-300 font-indie selection:bg-blue-500/30">
             <Navbar />
             <div className="md:hidden h-16" /> {/* Mobile spacer for fixed navbar */}
 
